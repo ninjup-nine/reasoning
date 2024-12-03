@@ -17,11 +17,6 @@
 ![Stars](https://img.shields.io/github/stars/ninjup-nine/reasoning?style=social)
 ![Forks](https://img.shields.io/github/forks/ninjup-nine/reasoning?style=social)
 
-Website: https://reasoning-ai.net/
-
-[![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=X&logoColor=white)](https://x.com/Reasoning_AI)&nbsp;&nbsp;
-[![Discord](https://dcbadge.limes.pink/api/server/https://discord.gg/YourDiscordLink)](https://discord.gg/YourDiscordLink)
-
 <hr>
 
 > [!WARNING]
@@ -195,9 +190,7 @@ The Reasoning subnet is licensed under the [MIT License](./LICENSE.md). Feel fre
 
 For any inquiries, please reach out to us via:
 
-- **Discord**: Join our community on [Discord](https://discord.gg/YourDiscordLink)
-- **Email**: [contact@reasoning-ai.net](mailto:contact@reasoning-ai.net)
-- **Twitter**: Follow us on [Twitter](https://x.com/Reasoning_AI)
+- **Github**: Leave an issue on [Github](https://github.com/ninjup-nine/reasoning/issues)
 
 <hr>
 
