@@ -1,213 +1,212 @@
-<div align="center">
+<a id="top"></a>
 
-# **Bittensor Subnet Template** <!-- omit in toc -->
-[![Discord Chat](https://img.shields.io/discord/308323056592486420.svg)](https://discord.gg/bittensor)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+<h1 align="center">R E A S O N I N G</h1>
 
----
+<img src="./static/banner.png" alt="Reasoning Banner" style='width: 100%; height: auto;'>
 
-## The Incentivized Internet <!-- omit in toc -->
+<p align="center"><i>A decentralized network for improving frontier AI reasoning models, built on Bittensor, the foremost decentralized AI network.</i></p>
 
-[Discord](https://discord.gg/bittensor) • [Network](https://taostats.io/) • [Research](https://bittensor.com/whitepaper)
-</div>
+![Version](https://img.shields.io/badge/Version-0.0.1-blue)
+![Language](https://img.shields.io/badge/Language-Python-blue)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
----
-- [Quickstarter template](#quickstarter-template)
-- [Introduction](#introduction)
-  - [Example](#example)
-- [Installation](#installation)
-  - [Before you proceed](#before-you-proceed)
-  - [Install](#install)
-- [Writing your own incentive mechanism](#writing-your-own-incentive-mechanism)
-- [Writing your own subnet API](#writing-your-own-subnet-api)
-- [Subnet Links](#subnet-links)
-- [License](#license)
+![Last Commit](https://img.shields.io/github/last-commit/ninjup-nine/reasoning)
+![Issues](https://img.shields.io/github/issues/ninjup-nine/reasoning)
+![Contributors](https://img.shields.io/github/contributors/ninjup-nine/reasoning)
 
----
-## Quickstarter template
+![Stars](https://img.shields.io/github/stars/ninjup-nine/reasoning?style=social)
+![Forks](https://img.shields.io/github/forks/ninjup-nine/reasoning?style=social)
 
-This template contains all the required installation instructions, scripts, and files and functions for:
-- Building Bittensor subnets.
-- Creating custom incentive mechanisms and running these mechanisms on the subnets. 
+<hr>
 
-In order to simplify the building of subnets, this template abstracts away the complexity of the underlying blockchain and other boilerplate code. While the default behavior of the template is sufficient for a simple subnet, you should customize the template in order to meet your specific requirements.
----
+> [!WARNING]
+> The Reasoning subnet is under active development and may undergo breaking changes. Please join our [Discord](https://discord.gg/YourDiscordLink) to stay updated. If you encounter any bugs or wish to contribute, please refer to our [Contribution Guidelines](./CONTRIBUTING.md) for instructions.
 
-## Introduction
+## Our Philosophy 💡
 
-**IMPORTANT**: If you are new to Bittensor subnets, read this section before proceeding to [Installation](#installation) section. 
+At the Reasoning Subnet, we believe in pushing the boundaries of AI reasoning models through collaboration, innovation, and transparency. Our approach is rooted in these core principles:
 
-The Bittensor blockchain hosts multiple self-contained incentive mechanisms called **subnets**. Subnets are playing fields in which:
-- Subnet miners who produce value, and
-- Subnet validators who produce consensus
+### Collaboration 🤝
 
-determine together the proper distribution of TAO for the purpose of incentivizing the creation of value, i.e., generating digital commodities, such as intelligence or data. 
+We foster a collaborative community where developers, miners, validators, and researchers can contribute and share ideas. Together, we aim to accelerate progress in AI reasoning capabilities.
 
-Each subnet consists of:
-- Subnet miners and subnet validators.
-- A protocol using which the subnet miners and subnet validators interact with one another. This protocol is part of the incentive mechanism.
-- The Bittensor API using which the subnet miners and subnet validators interact with Bittensor's onchain consensus engine [Yuma Consensus](https://bittensor.com/documentation/validating/yuma-consensus). The Yuma Consensus is designed to drive these actors: subnet validators and subnet miners, into agreement on who is creating value and what that value is worth. 
+### Innovation 🚀
 
-This starter template is split into three primary files. To write your own incentive mechanism, you should edit these files. These files are:
-1. `template/protocol.py`: Contains the definition of the protocol used by subnet miners and subnet validators.
-2. `neurons/miner.py`: Script that defines the subnet miner's behavior, i.e., how the subnet miner responds to requests from subnet validators.
-3. `neurons/validator.py`: This script defines the subnet validator's behavior, i.e., how the subnet validator requests information from the subnet miners and determines the scores.
+We are committed to innovating and improving upon existing tree-search algorithms to enhance reasoning models. By incentivizing novel methods for solving tree-search problems, we encourage developers to explore new techniques and push the boundaries of what's possible.
 
-### Example
+### Transparency 🔍
 
-The Bittensor Subnet 1 for Text Prompting is built using this template. See [prompting](https://github.com/macrocosm-os/prompting) for how to configure the files and how to add monitoring and telemetry and support multiple miner types. Also see this Subnet 1 in action on [Taostats](https://taostats.io/subnets/netuid-1/) explorer.
+We believe in the importance of open-source models and transparent methodologies. By providing access to our codebase, documentation, and research, we aim to empower others to understand, reproduce, and build upon our work, fostering trust and facilitating further advancements in AI.
 
----
+<hr>
 
-## Installation
+# Subnet Information
 
-### Before you proceed
-Before you proceed with the installation of the subnet, note the following: 
+<details>
+    <summary><h2>Table of Contents 📚</h2></summary>
+    <ol style="list-style: none;">
+        <li>
+            <a href="#about" style="color: #3ecf8e;">About 🌐</a>
+            <ul style="list-style: none; margin-left: 2px;">
+                <li>
+                    → <a href="#what-is-the-reasoning-subnet" style="color: #edb334;">What is the Reasoning Subnet? 🔍</a>
+                </li>
+                <li>
+                    → <a href="#background" style="color: #edb334;">Background 🧠</a>
+                </li>
+                <li>
+                    → <a href="#the-role-of-open-source-llms" style="color: #edb334;">The Role of Open-Source LLMs 🔓</a>
+                </li>
+                <li>
+                    → <a href="#importance-of-tree-search-methods" style="color: #edb334;">Importance of Tree-Search Methods 🌳</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#validators" style="color: #3ecf8e;">Validators 🛡️</a>
+        </li>
+        <li>
+            <a href="#miners" style="color: #3ecf8e;">Miners ⛏️</a>
+        </li>
+        <li>
+            <a href="#installation" style="color: #3ecf8e;">Installation 🛠️</a>
+            <ul style="list-style: none; margin-left: 2px;">
+                <li>
+                    → <a href="#basic-installation-guide" style="color: #edb334;">Basic Installation Guide 📘</a>
+                </li>
+                <li>
+                    → <a href="#for-miners" style="color: #edb334;">For Miners ⛏️</a>
+                </li>
+                <li>
+                    → <a href="#for-validators" style="color: #edb334;">For Validators 🛡️</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#contribute" style="color: #3ecf8e;">Contribute 🤝</a>
+        </li>
+        <li>
+            <a href="#license" style="color: #3ecf8e;">License 📜</a>
+        </li>
+        <li>
+            <a href="#contact" style="color: #3ecf8e;">Contact 📞</a>
+        </li>
+    </ol>
+</details>
 
-- Use these instructions to run your subnet locally for your development and testing, or on Bittensor testnet or on Bittensor mainnet. 
-- **IMPORTANT**: We **strongly recommend** that you first run your subnet locally and complete your development and testing before running the subnet on Bittensor testnet. Furthermore, make sure that you next run your subnet on Bittensor testnet before running it on the Bittensor mainnet.
-- You can run your subnet either as a subnet owner, or as a subnet validator or as a subnet miner. 
-- **IMPORTANT:** Make sure you are aware of the minimum compute requirements for your subnet. See the [Minimum compute YAML configuration](./min_compute.yml).
-- Note that installation instructions differ based on your situation: For example, installing for local development and testing will require a few additional steps compared to installing for testnet. Similarly, installation instructions differ for a subnet owner vs a validator or a miner. 
+<a id="about"></a>
 
-### Install
+## About 🌐
 
-- **Running locally**: Follow the step-by-step instructions described in this section: [Running Subnet Locally](./docs/running_on_staging.md).
-- **Running on Bittensor testnet**: Follow the step-by-step instructions described in this section: [Running on the Test Network](./docs/running_on_testnet.md).
-- **Running on Bittensor mainnet**: Follow the step-by-step instructions described in this section: [Running on the Main Network](./docs/running_on_mainnet.md).
+<a id="what-is-the-reasoning-subnet"></a>
 
----
+### What is the Reasoning Subnet? 🔍
 
-## Writing your own incentive mechanism
+The Reasoning subnet aims to improve the capabilities of frontier AI reasoning models. It does this by incentivizing the creation of novel methods for solving tree-search problems. By providing a framework for evaluating the performance of different tree-search algorithms, we encourage developers to innovate and improve upon existing techniques.
 
-As described in [Quickstarter template](#quickstarter-template) section above, when you are ready to write your own incentive mechanism, update this template repository by editing the following files. The code in these files contains detailed documentation on how to update the template. Read the documentation in each of the files to understand how to update the template. There are multiple **TODO**s in each of the files identifying sections you should update. These files are:
-- `template/protocol.py`: Contains the definition of the wire-protocol used by miners and validators.
-- `neurons/miner.py`: Script that defines the miner's behavior, i.e., how the miner responds to requests from validators.
-- `neurons/validator.py`: This script defines the validator's behavior, i.e., how the validator requests information from the miners and determines the scores.
-- `template/forward.py`: Contains the definition of the validator's forward pass.
-- `template/reward.py`: Contains the definition of how validators reward miner responses.
+<a id="background"></a>
 
-In addition to the above files, you should also update the following files:
-- `README.md`: This file contains the documentation for your project. Update this file to reflect your project's documentation.
-- `CONTRIBUTING.md`: This file contains the instructions for contributing to your project. Update this file to reflect your project's contribution guidelines.
-- `template/__init__.py`: This file contains the version of your project.
-- `setup.py`: This file contains the metadata about your project. Update this file to reflect your project's metadata.
-- `docs/`: This directory contains the documentation for your project. Update this directory to reflect your project's documentation.
+### Background 🧠
 
-__Note__
-The `template` directory should also be renamed to your project name.
----
+Reasoning models represent a cutting-edge frontier in the development of Large Language Models (LLMs). Unlike traditional LLMs that primarily focus on predicting the next word in a sequence based on learned language patterns, reasoning models are designed to simulate complex cognitive processes. They operate by generating long chains of reasoning to solve intricate queries, effectively mimicking human problem-solving techniques.
 
-# Writing your own subnet API
-To leverage the abstract `SubnetsAPI` in Bittensor, you can implement a standardized interface. This interface is used to interact with the Bittensor network and can be used by a client to interact with the subnet through its exposed axons.
+One of the key distinctions between reasoning models and traditional LLMs lies in their computational paradigms during inference, also known as test-time compute. Reasoning models require the generation of extensive reasoning paths, which means they produce significantly more tokens than traditional models. This approach allows them to explore multiple potential solutions before arriving at an answer, enabling them to tackle more complex tasks that involve logic, deduction, and multi-step problem-solving.
 
-What does Bittensor communication entail? Typically two processes, (1) preparing data for transit (creating and filling `synapse`s) and (2), processing the responses received from the `axon`(s).
+Organizations like OpenAI are at the forefront of developing advanced reasoning models. While specifics about these models may not be publicly disclosed due to proprietary constraints, it is understood that they employ sophisticated techniques such as framing problem-solving as tree-search problems. In this context, the model generates numerous reasoning paths; some lead to correct answers, while others do not. Through reinforcement learning mechanisms, reasoning paths that yield correct answers are rewarded, and those that do not are penalized. This training process refines the model's ability to select more effective reasoning strategies over time.
 
-This protocol uses a handler registry system to associate bespoke interfaces for subnets by implementing two simple abstract functions:
-- `prepare_synapse`
-- `process_responses`
+The closed-source nature of these advanced models, including the lack of access to training code, model weights, and detailed technical reports, presents challenges for the broader AI community. Without transparency, it becomes difficult for researchers and developers to understand the underlying methodologies, reproduce results, or build upon these innovations.
 
-These can be implemented as extensions of the generic `SubnetsAPI` interface.  E.g.:
+<a id="the-role-of-open-source-llms"></a>
 
+### The Role of Open-Source LLMs 🔓
 
-This is abstract, generic, and takes(`*args`, `**kwargs`) for flexibility. See the extremely simple base class:
-```python
-class SubnetsAPI(ABC):
-    def __init__(self, wallet: "bt.wallet"):
-        self.wallet = wallet
-        self.dendrite = bt.dendrite(wallet=wallet)
+Open-source LLMs have significantly empowered developers and researchers by providing access to sophisticated language models without relying on proprietary platforms. These models encourage innovation by allowing users to build novel applications tailored to specific needs, ranging from natural language processing tasks to specialized domain applications.
 
-    async def __call__(self, *args, **kwargs):
-        return await self.query_api(*args, **kwargs)
+Transparency is a hallmark of open-source models. The ability to inspect and understand the model's architecture, training data, and methodologies allows for thorough auditing and enhances trust in the model's outputs. This scrutiny helps identify biases, limitations, and potential areas for improvement, leading to more robust and reliable AI systems.
 
-    @abstractmethod
-    def prepare_synapse(self, *args, **kwargs) -> Any:
-        """
-        Prepare the synapse-specific payload.
-        """
-        ...
+Customization is another advantage offered by open-source LLMs. Developers can fine-tune models on domain-specific datasets to improve performance in targeted applications. This flexibility facilitates better integration into existing systems and workflows, as the models can be adapted to meet particular requirements.
 
-    @abstractmethod
-    def process_responses(self, responses: List[Union["bt.Synapse", Any]]) -> Any:
-        """
-        Process the responses from the network.
-        """
-        ...
+Accessibility is a key benefit, as open-source models foster a collaborative environment where developers can share knowledge, tools, and improvements. This collaborative spirit accelerates development cycles and promotes the democratization of AI technology, ensuring that advancements are not limited to organizations with extensive resources.
 
-```
+<a id="importance-of-tree-search-methods"></a>
 
+### Importance of Tree-Search Methods 🌳
 
-Here is a toy example:
+Tree-search methods are fundamental algorithms used to solve complex decision-making problems, and they play a crucial role in enhancing reasoning models. Techniques such as Monte Carlo Tree Search (MCTS) and algorithms inspired by AlphaZero have been instrumental in advancing artificial intelligence, particularly in strategic game playing and problem-solving domains.
 
-```python
-from bittensor.subnets import SubnetsAPI
-from MySubnet import MySynapse
+MCTS is a heuristic search algorithm that uses randomness and statistical sampling to make decisions in complex spaces. It balances exploration of new paths with exploitation of known successful paths, making it effective for navigating large and complicated search trees. AlphaZero's approach, which combines deep learning with tree search, has demonstrated unprecedented success in mastering games like chess and Go without prior human knowledge.
 
-class MySynapseAPI(SubnetsAPI):
-    def __init__(self, wallet: "bt.wallet"):
-        super().__init__(wallet)
-        self.netuid = 99
+Improving tree-search methods is essential for developing better reasoning models. Enhancements in these algorithms enable more efficient exploration of possible reasoning paths, reduce computational overhead, and increase the accuracy of the models' outputs. By optimizing how tree-search algorithms handle exploration, evaluation, and backpropagation of rewards, researchers can create reasoning models that are more capable of solving complex tasks.
 
-    def prepare_synapse(self, prompt: str) -> MySynapse:
-        # Do any preparatory work to fill the synapse
-        data = do_prompt_injection(prompt)
+<a id="validators"></a>
 
-        # Fill the synapse for transit
-        synapse = StoreUser(
-            messages=[data],
-        )
-        # Send it along
-        return synapse
+## Validators 🛡️
 
-    def process_responses(self, responses: List[Union["bt.Synapse", Any]]) -> str:
-        # Look through the responses for information required by your application
-        for response in responses:
-            if response.dendrite.status_code != 200:
-                continue
-            # potentially apply post processing
-            result_data = postprocess_data_from_response(response)
-        # return data to the client
-        return result_data
-```
+Validators play a critical role in this ecosystem. They are responsible for creating diverse configurations of common tree-search problems, including examples like the n-puzzle, maze navigation, Towers of Hanoi, and d-chain problems. Validators evaluate the performance of submitted solutions from miners against defined criteria:
 
-You can use a subnet API to the registry by doing the following:
-1. Download and install the specific repo you want
-1. Import the appropriate API handler from bespoke subnets
-1. Make the query given the subnet specific API
+- **Highest Score Wins**: Solutions are ranked based on the score achieved in solving the problem.
+- **Lowest Runtime Wins**: Efficiency is rewarded by assessing how quickly a solution arrives at the correct answer.
+- **Lowest Memory Usage Wins**: Optimizing memory usage is essential for scalability and performance.
 
+<a id="miners"></a>
 
+## Miners ⛏️
 
-# Subnet Links
-In order to see real-world examples of subnets in-action, see the `subnet_links.py` document or access them from inside the `template` package by:
-```python
-import template
-template.SUBNET_LINKS
-[{'name': 'sn0', 'url': ''},
- {'name': 'sn1', 'url': 'https://github.com/opentensor/prompting/'},
- {'name': 'sn2', 'url': 'https://github.com/bittranslateio/bittranslate/'},
- {'name': 'sn3', 'url': 'https://github.com/gitphantomman/scraping_subnet/'},
- {'name': 'sn4', 'url': 'https://github.com/manifold-inc/targon/'},
-...
-]
-```
+Miners are tasked with developing and implementing tree-search algorithms to solve the problems provided by validators. They apply different methods and strategies in their solutions, aiming to optimize performance based on the evaluation criteria. Upon submitting their solutions, validators assess their effectiveness, correctness, and resource utilization. Successful miners are rewarded, incentivizing continual improvement and innovation in tree-search methodologies.
 
-## License
-This repository is licensed under the MIT License.
-```text
-# The MIT License (MIT)
-# Copyright © 2024 Opentensor Foundation
+<a id="installation"></a>
 
-# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-# documentation files (the “Software”), to deal in the Software without restriction, including without limitation
-# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
-# and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+## Installation 🛠️
 
-# The above copyright notice and this permission notice shall be included in all copies or substantial portions of
-# the Software.
+Here at the Reasoning Subnet, we strive to make the installation process as seamless as possible, regardless of your technical background. We have crafted step-by-step guides and tutorials to get you started:
 
-# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-# THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-# DEALINGS IN THE SOFTWARE.
-```
+<a id="basic-installation-guide"></a>
+
+- **Basic Installation Guide**: Refer to the [Installation Guide](https://github.com/ninjup-nine/reasoning/blob/main/docs/basic_installation.md) for general setup instructions.
+
+<a id="for-miners"></a>
+
+- **For Miners**: Follow the [Miner Installation Guide](https://github.com/ninjup-nine/reasoning/blob/main/docs/miner.md) to set up your mining environment and start contributing solutions.
+
+<a id="for-validators"></a>
+
+- **For Validators**: The [Validator Installation Guide](https://github.com/ninjup-nine/reasoning/blob/main/docs/validator.md) provides detailed steps to configure and manage validation tasks.
+
+<a id="contribute"></a>
+
+## Contribute 🤝
+
+We welcome contributions from developers, miners, validators, and users who are interested in improving tree-search methods. Refer to our [Contribution Guidelines](./CONTRIBUTING.md) for detailed instructions on how to participate in the project. Collaboration and collective effort are key to advancing the capabilities of reasoning models and AI technology as a whole.
+
+<a id="license"></a>
+
+## License 📜
+
+The Reasoning subnet is licensed under the [MIT License](./LICENSE.md). Feel free to use, modify, and distribute our codebase for your projects. We appreciate any feedback, suggestions, and contributions to help us improve our solutions and make them more accessible to the community.
+
+<a id="contact"></a>
+
+## Contact 📞
+
+For any inquiries, please reach out to us via:
+
+- **Github**: Leave an issue on [Github](https://github.com/ninjup-nine/reasoning/issues)
+
+<hr>
+
+<pre align="center">
+     ___          ___          ___          ___       ___                              ___     
+    /\  \        /\  \        /\  \        /\  \     /\  \                            /\  \    
+   /::\  \      /::\  \      /::\  \      /::\  \    \:\  \       ___          ___    \:\  \   
+  /:/\:\  \    /:/\:\  \    /:/\:\  \    /:/\:\  \    \:\  \     /\__\        /\__\    \:\  \  
+ /::\~\:\  \  /::\~\:\  \  /::\~\:\__\  /:/  \:\  \   /::\  \   /:/__/       /:/__/    /::\  \ 
+/:/\:\ \:\__\/:/\:\ \:\__\/:/\:\ \:|__|/:/__/ \:\__\ /:/\:\__\ /::\  \      /::\  \   /:/\:\__\
+\/_|::\/:/  /\/_|::\/:/  /\/_|:\ \:\/:/\:\  \  \/__/ \:\/:/  / \/\:\  \__  /:/\:\  \ /:/  \/__/
+   |:|::/  /    |:|::/  /    |:|:\::/  \:\  \         \::/  /     \:\/\__\/:/  \:\  /:/  /     
+   |:|\/__/     |:|\/__/     |:|::/    \:\  \         /:/  /       \::/  /:/__/ \:\/:/  /      
+   |:|  |       |:|  |       |:|\/__    \:\__\       /:/  /         \/__/ \:\  \  \::/__/       
+    \|__|        \|__|        \|__|       \/__/       \/__/                  \:\__\  \/\__\      
+                                                                            \/__/   \/__/      
+</pre>
+
+[Back to Top](#top)
