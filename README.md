@@ -43,11 +43,9 @@
 
 # Installation
 
-- Basic Installation Guide: Installation Guide
-- For Miners: Miner Installation Guide
-- For Validators: Validator Installation Guide
-
-
+- Basic Installation Guide: [Installation Guide](https://github.com/ninjup-nine/reasoning/blob/main/docs/basic_installation.md)
+- For Miners: [Miner Installation Guide](https://github.com/ninjup-nine/reasoning/blob/main/docs/miner.md)
+- For Validators: [Validator Installation Guide](https://github.com/ninjup-nine/reasoning/blob/main/docs/validator.md)
 
 # Contribute
 
