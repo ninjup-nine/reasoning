@@ -1,55 +1,59 @@
-# The MIT License (MIT)
-# Copyright © 2023 Yuma Rao
-# TODO(developer): Set your name
-# Copyright © 2023 <your name>
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-# documentation files (the “Software”), to deal in the Software without restriction, including without limitation
-# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
-# and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in all copies or substantial portions of
-# the Software.
-
-# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-# THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-# DEALINGS IN THE SOFTWARE.
 import numpy as np
-from typing import List
+from typing import List, Tuple
+
 import bittensor as bt
 
+from reasoning.validator.search import SlidingPuzzleVerifier, SlidingPuzzle
 
-def reward(query: int, response: int) -> float:
+
+def reward(puzzle: List[List[int]], solution: List[Tuple[int, int, int, int]] | None) -> float:
     """
-    Reward the miner response to the dummy request. This method returns a reward
-    value for the miner, which is used to update the miner's score.
-
+    Reward the miner response based on the quality of their sliding puzzle solution.
+    
+    Args:
+    - puzzle (List[List[int]]): The initial puzzle state
+    - solution (List[Tuple[int, int, int, int]] | None): The sequence of moves provided by the miner
+    
     Returns:
-    - float: The reward value for the miner.
+    - float: The reward value between 0 and 1
     """
-    bt.logging.info(
-        f"In rewards, query val: {query}, response val: {response}, rewards val: {1.0 if response == query * 2 else 0}"
-    )
-    return 1.0 if response == query * 2 else 0
+    # Return 0 for invalid/None solutions
+    if solution is None:
+        bt.logging.debug(f"Solution was None - returning 0 reward")
+        return 0.0
+    
+    # Verify the solution
+    problem = SlidingPuzzle(puzzle)
+    verifier = SlidingPuzzleVerifier(problem)
+    is_valid, error_msg = verifier.verify_solution(solution)
+    
+    if not is_valid:
+        bt.logging.debug(f"Invalid solution: {error_msg} - returning 0 reward")
+        return 0.0
+        
+    # Calculate reward based on solution quality
+    total_cost = verifier.calculate_solution_cost(solution)
+    
+    # Convert cost to reward using exponential decay: longer solutions get lower rewards
+    reward = np.exp(-0.1 * total_cost)
+    
+    bt.logging.debug(f"Valid solution with cost {total_cost} - reward: {reward}")
+    return float(reward)
 
 
 def get_rewards(
     self,
-    query: int,
-    responses: List[float],
+    query: List[List[int]], 
+    responses: List[List[Tuple[int, int, int, int]]]
 ) -> np.ndarray:
     """
     Returns an array of rewards for the given query and responses.
 
     Args:
-    - query (int): The query sent to the miner.
-    - responses (List[float]): A list of responses from the miner.
+    - query (List[List[int]]): The initial puzzle state sent to miners
+    - responses (List[List[Tuple[int, int, int, int]]]): List of solution sequences from miners
 
     Returns:
-    - np.ndarray: An array of rewards for the given query and responses.
+    - np.ndarray: An array of rewards for the given solutions
     """
-    # Get all the reward results by iteratively calling your reward() function.
-
     return np.array([reward(query, response) for response in responses])

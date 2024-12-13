@@ -12,6 +12,7 @@ A = TypeVar('A')  # Action type
 
 @dataclass
 class SearchNode(Generic[S, A]):
+    """A single node in a search tree."""
     state: S
     action: Optional[A]  # Action that led to this state (None for root)
     parent: Optional['SearchNode[S, A]']  # Parent node (None for root)
@@ -69,12 +70,10 @@ class SearchAlgorithm(Generic[S, A]):
 
     def __init__(self, problem: Problem[S, A]):
         self.problem = problem
-        self.nodes_generated = 0
-        self.nodes_expanded = 0
+        self.nodes_generated = 0 # Total nodes discovered
+        self.nodes_expanded = 0 # Total nodes visited
 
-    def solve(self,
-             time_limit: Optional[float] = None,
-             node_limit: Optional[int] = None) -> Dict[str, Any]:
+    def solve(self, time_limit: Optional[float] = None, node_limit: Optional[int] = None) -> Dict[str, Any]:
         """
         Run search algorithm and return results dictionary containing:
         - 'success': Whether a solution was found
@@ -117,6 +116,22 @@ class SearchAlgorithm(Generic[S, A]):
                 time_limit: Optional[float],
                 node_limit: Optional[int]) -> Optional[SearchNode[S, A]]:
         """Implementation of the actual search algorithm."""
+        pass
+
+class Verifier(Generic[S, A]):
+    """Abstract base class for solution verifiers."""
+    
+    def __init__(self, problem: Problem[S, A]):
+        self.problem = problem
+    
+    @abstractmethod
+    def verify_solution(self, solution: List[A]) -> bool:
+        """Verify if the solution is valid."""
+        pass
+    
+    @abstractmethod
+    def calculate_solution_cost(self, solution: List[A]) -> float:
+        """Calculate the total cost of the solution."""
         pass
 
 class AStarSearch(SearchAlgorithm[S, A]):
@@ -182,10 +197,9 @@ class AStarSearch(SearchAlgorithm[S, A]):
 
         return None  # No solution found
 
-# Example Usage:
 class SlidingPuzzle(Problem[List[List[int]], tuple[int, int, int, int]]):
     """
-    8-puzzle problem implementation.
+    Sliding puzzle problem implementation.
     State: 2D list representing tile positions (0 = empty)
     Action: tuple(row1, col1, row2, col2) representing tile swap
     """
@@ -251,6 +265,7 @@ class SlidingPuzzle(Problem[List[List[int]], tuple[int, int, int, int]]):
         return float(distance)
 
 class SlidingPuzzleGenerator:
+    """Generates a random"""
     def __init__(self, size: int = 3):
         self.size = size
         self.goal_state = [
@@ -326,7 +341,7 @@ class SlidingPuzzleGenerator:
     def is_solvable(self, state: List[List[int]]) -> bool:
         """
         Check if puzzle is solvable using inversion count.
-        For n×n boards:
+        For nxn boards:
         - If n is odd, puzzle is solvable if inversion count is even
         - If n is even, puzzle is solvable if:
           * blank on even row from bottom + odd inversions, or
@@ -360,13 +375,58 @@ class SlidingPuzzleGenerator:
         for row in puzzle:
             print(' '.join(str(x).rjust(max_width) for x in row))
 
+
+class SlidingPuzzleVerifier:
+    """Verifies the correctness of sliding puzzle solutions."""
+    
+    def __init__(self, problem: SlidingPuzzle):
+        self.problem = problem
+    
+    def verify_solution(self, solution: List[tuple[int, int, int, int]]) -> bool:
+        """
+        Verify if the solution is valid.
+        Returns (is_valid, error_message).
+        """
+        current_state = self.problem.initial_state()
+        
+        # Check each move in the solution
+        for i, action in enumerate(solution):
+            # Verify action format
+            if not isinstance(action, tuple) or len(action) != 4:
+                return False, f"Invalid action format at step {i}: {action}"
+            
+            # Verify action is legal
+            if action not in self.problem.actions(current_state):
+                return False, f"Illegal move at step {i}: {action}"
+            
+            # Apply the move
+            current_state = self.problem.result(current_state, action)
+        
+        # Verify final state is goal state
+        if not self.problem.is_goal(current_state):
+            return False
+        
+        return True
+    
+    def calculate_solution_cost(self, solution: List[tuple[int, int, int, int]]) -> float:
+        """Calculate the total cost of the solution."""
+        total_cost = 0.0
+        current_state = self.problem.initial_state()
+        
+        for action in solution:
+            next_state = self.problem.result(current_state, action)
+            total_cost += self.problem.step_cost(current_state, action, next_state)
+            current_state = next_state
+        
+        return total_cost
+
 # Example usage:
 if __name__ == "__main__":
     # Create a generator for 3x3 puzzles
     generator = SlidingPuzzleGenerator(3)
 
     # Generate a single puzzle
-    puzzle = generator.generate(20)
+    puzzle = generator.generate(10)
     print("Generated 3x3 puzzle:")
     generator.print_puzzle(puzzle)
     print(f"Solvable: {generator.is_solvable(puzzle)}")
@@ -384,14 +444,16 @@ if __name__ == "__main__":
             print(f"Nodes expanded: {result['nodes_expanded']}")
             print(f"Time taken: {result['time']:.2f} seconds")
 
-            # Demonstrate the solution
-            print("\nSolution sequence:")
-            current_state = puzzle
-            generator.print_puzzle(current_state)
-            for action in result['solution']:
-                print("\n↓ Move:", action)
-                current_state = problem.result(current_state, action)
-                generator.print_puzzle(current_state)
+            # Verify the solution
+            verifier = SlidingPuzzleVerifier(problem)
+            is_valid = verifier.verify_solution(result['solution'])
+            
+            if is_valid:
+                print("\nSolution verified successfully!")
+                total_cost = verifier.calculate_solution_cost(result['solution'])
+                print(f"Total solution cost: {total_cost}")
+            else:
+                print(f"\nInvalid solution found!")
         else:
             print("\nNo solution found within time limit")
     else:
