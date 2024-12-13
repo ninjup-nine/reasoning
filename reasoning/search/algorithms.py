@@ -2,8 +2,8 @@
 import time
 from typing import Generic, Optional, TypeVar, Dict, Any, Set, List
 from heapq import heappush, heappop
-from .node import SearchNode
-from .problem import Problem
+from reasoning.search.node import SearchNode
+from reasoning.search.problem import Problem
 from abc import ABC, abstractmethod
 
 S = TypeVar('S')  # State type

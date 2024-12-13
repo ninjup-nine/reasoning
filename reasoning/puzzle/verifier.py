@@ -1,7 +1,7 @@
 
 from typing import List, Tuple
-from ..search.problem import Verifier
-from .puzzle import SlidingPuzzle
+from reasoning.search.problem import Verifier
+
 
 class SlidingPuzzleVerifier(Verifier[List[List[int]], Tuple[int, int, int, int]]):
     """Verifies the correctness of sliding puzzle solutions."""

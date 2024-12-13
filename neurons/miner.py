@@ -5,7 +5,8 @@ import bittensor as bt
 # import base miner class which takes care of most of the boilerplate
 from reasoning.base.miner import BaseMinerNeuron
 from reasoning.protocol import ReasoningSynapse
-from reasoning.validator.search import AStarSearch, SlidingPuzzle
+from reasoning.search.algorithms import AStarSearch
+from reasoning.puzzle.puzzle import SlidingPuzzle
 
 
 class Miner(BaseMinerNeuron):

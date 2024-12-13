@@ -3,7 +3,8 @@ from typing import List, Tuple
 
 import bittensor as bt
 
-from reasoning.validator.search import SlidingPuzzleVerifier, SlidingPuzzle
+from reasoning.puzzle.verifier import SlidingPuzzleVerifier
+from reasoning.puzzle.puzzle import SlidingPuzzle
 
 
 def reward(puzzle: List[List[int]], solution: List[Tuple[int, int, int, int]] | None) -> float:
@@ -25,10 +26,10 @@ def reward(puzzle: List[List[int]], solution: List[Tuple[int, int, int, int]] | 
     # Verify the solution
     problem = SlidingPuzzle(puzzle)
     verifier = SlidingPuzzleVerifier(problem)
-    is_valid, error_msg = verifier.verify_solution(solution)
+    is_valid = verifier.verify_solution(solution)
     
     if not is_valid:
-        bt.logging.debug(f"Invalid solution: {error_msg} - returning 0 reward")
+        bt.logging.debug(f"Invalid solution - returning 0 reward")
         return 0.0
         
     # Calculate reward based on solution quality

@@ -2,8 +2,8 @@ import time
 import bittensor as bt
 
 from reasoning.protocol import ReasoningSynapse
-from reasoning.validator.search import SlidingPuzzleGenerator
-from reasoning.validator.reward import get_rewards
+from reasoning.puzzle.generator import SlidingPuzzleGenerator
+from reasoning.reward import get_rewards
 from reasoning.utils.uids import get_random_uids
 
 
@@ -21,7 +21,7 @@ async def forward(self):
     miner_uids = get_random_uids(self, k=self.config.neuron.sample_size)
 
     # Generate the puzzle problem
-    generator = SlidingPuzzleGenerator()
+    generator = SlidingPuzzleGenerator(10)
     puzzle = generator.generate()
 
     # Prepare the synapse object

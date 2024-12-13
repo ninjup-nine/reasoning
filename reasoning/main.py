@@ -1,8 +1,8 @@
 
-from puzzle.generator import SlidingPuzzleGenerator
-from puzzle.puzzle import SlidingPuzzle
-from puzzle.verifier import SlidingPuzzleVerifier
-from search.algorithms import AStarSearch
+from reasoning.puzzle.generator import SlidingPuzzleGenerator
+from reasoning.puzzle.puzzle import SlidingPuzzle
+from reasoning.puzzle.verifier import SlidingPuzzleVerifier
+from reasoning.search.algorithms import AStarSearch
 
 def main():
     # Create a generator for 3x3 puzzles
