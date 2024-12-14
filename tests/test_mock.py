@@ -1,8 +1,9 @@
 import pytest
 import asyncio
 import bittensor as bt
-from prompting.mock import MockDendrite, MockMetagraph, MockSubtensor
-from prompting.protocol import PromptingSynapse
+
+from reasoning.mock import MockDendrite, MockMetagraph, MockSubtensor
+from reasoning.protocol import ReasoningSynapse
 
 
 @pytest.mark.parametrize("netuid", [1, 2, 3])
