@@ -1,6 +1,6 @@
-
 from typing import List, Tuple
 from reasoning.search.problem import Problem
+import copy
 
 class SlidingPuzzle(Problem[List[List[int]], Tuple[int, int, int, int]]):
     """
@@ -10,11 +10,22 @@ class SlidingPuzzle(Problem[List[List[int]], Tuple[int, int, int, int]]):
     """
 
     def __init__(self, initial: List[List[int]]):
-        self.initial = initial
-        self.size = len(initial)
+        # Validate puzzle is square and contains valid numbers
+        size = len(initial)
+        if not all(len(row) == size for row in initial):
+            raise IndexError("Puzzle must be square")
+            
+        # Check for valid numbers (0 to size^2-1, each appearing once)
+        flat = [num for row in initial for num in row]
+        if sorted(flat) != list(range(size * size)):
+            raise AssertionError("Invalid puzzle state: must contain numbers 0 to size^2-1 exactly once")
+            
+        # Deep copy the initial state
+        self.initial = copy.deepcopy(initial)
+        self.size = size
 
     def initial_state(self) -> List[List[int]]:
-        return [row[:] for row in self.initial]
+        return copy.deepcopy(self.initial)
 
     def is_goal(self, state: List[List[int]]) -> bool:
         # Check if tiles are in order
@@ -44,11 +55,15 @@ class SlidingPuzzle(Problem[List[List[int]], Tuple[int, int, int, int]]):
                 moves.append((empty_pos[0], empty_pos[1], new_i, new_j))
         return moves
 
-    def result(self, state: List[List[int]],
-               action: Tuple[int, int, int, int]) -> List[List[int]]:
-        # Create new state and swap tiles
-        new_state = [row[:] for row in state]
+    def result(self, state: List[List[int]], action: Tuple[int, int, int, int]) -> List[List[int]]:
+        """
+        Returns the new state after applying the action.
+        Action is (row1, col1, row2, col2) representing swapping tiles at these positions.
+        """
+        # Create new state with deep copy
+        new_state = copy.deepcopy(state)
         r1, c1, r2, c2 = action
+        # Swap tiles
         new_state[r1][c1], new_state[r2][c2] = new_state[r2][c2], new_state[r1][c1]
         return new_state
 
@@ -58,12 +73,20 @@ class SlidingPuzzle(Problem[List[List[int]], Tuple[int, int, int, int]]):
         return 1.0
 
     def heuristic(self, state: List[List[int]]) -> float:
-        # Manhattan distance heuristic
-        distance = 0
+        """
+        Manhattan distance heuristic - calculates distance of empty tile (0) 
+        from its goal position at (0,0)
+        """
+        # Find empty tile position
+        empty_pos = None
         for i in range(self.size):
             for j in range(self.size):
-                if state[i][j] != 0:  # Skip empty tile
-                    goal_i = state[i][j] // self.size
-                    goal_j = state[i][j] % self.size
-                    distance += abs(goal_i - i) + abs(goal_j - j)
+                if state[i][j] == 0:
+                    empty_pos = (i, j)
+                    break
+            if empty_pos:
+                break
+            
+        # Calculate Manhattan distance from empty tile to (0,0)
+        distance = abs(empty_pos[0] - 0) + abs(empty_pos[1] - 0)
         return float(distance)
