@@ -18,6 +18,11 @@ def reward(puzzle: List[List[int]], solution: List[Tuple[int, int, int, int]] | 
     Returns:
     - float: The reward value between 0 and 1
     """
+    # Return 1.0 if puzzle is already solved
+    if SlidingPuzzle(puzzle).is_goal(puzzle) and (solution is None or solution == []):
+        bt.logging.debug(f"Puzzle already solved - returning 1.0 reward")
+        return 1.0
+    
     # Return 0 for invalid/None solutions
     if solution is None:
         bt.logging.debug(f"Solution was None - returning 0 reward")

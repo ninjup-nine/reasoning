@@ -12,12 +12,12 @@ class ReasoningSynapse(bt.Synapse):
     - problem: A list of lists of ints indicating the game board state.
     - solution: A list of actions  problem.
     """
+    # Filled by validator
     type: str
-    # Initial problem state
-    problem: List[List[int]]
+    problem: List[List[int]] # Update this when adding more problem types
 
-    # Optional request output, filled by recieving axon.
-    response: Optional[List[Tuple[int, int, int, int]]] = None
+    # Filled by miner
+    response: Optional[List[Tuple[int, int, int, int]]] = None # Update this when adding more problem types
 
     def deserialize(self) -> Dict[str, List[List[int]]]:
         """
