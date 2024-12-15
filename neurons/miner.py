@@ -33,12 +33,16 @@ class Miner(BaseMinerNeuron):
         Returns:
             ReasoningSynapse: The synapse object with a list of actions to solve the problem.
         """
-        problem = synapse.problem
-        problem = SlidingPuzzle(problem)
-        bt.logging.info(f"Received problem from validator.")
-        solver = AStarSearch(problem)
-        result = solver.solve(time_limit=30)
-        synapse.response = result['solution']
+        if synapse.type == "sliding_puzzle":
+            problem = synapse.problem
+            bt.logging.info(f"Received {synapse.type} problem from validator: {problem}")
+            problem = SlidingPuzzle(problem)
+            solver = AStarSearch(problem)
+            result = solver.solve(time_limit=30)
+            bt.logging.info(f"Result: {result}")
+            if result['success']:
+                bt.logging.info("Problem solved. Submitting solution to validator.")
+                synapse.response = result['solution']
         return synapse
 
     async def blacklist(
