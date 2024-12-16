@@ -151,6 +151,20 @@ def add_miner_args(cls, parser):
         help="Wandb entity to log to.",
     )
 
+    parser.add_argument(
+        "--neuron.port",
+        type=int,
+        help="Port to use for the miner axon.",
+        default=8091
+    )
+
+    parser.add_argument(
+        "--neuron.ip",
+        type=str,
+        help="IP to use for the miner axon.",
+        default="127.0.0.1"
+    )
+
 
 def add_validator_args(cls, parser):
     """Add validator specific arguments to the parser."""

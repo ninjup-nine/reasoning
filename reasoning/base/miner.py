@@ -36,10 +36,20 @@ class BaseMinerNeuron(BaseNeuron):
             bt.logging.warning(
                 "You are allowing non-registered entities to send requests to your miner. This is a security risk."
             )
+
+        # Use port from config instead of parameter
+        self.port = self.config.neuron.port
+
+        # Use ip from config instead of parameter
+        self.ip = self.config.neuron.ip
+
         # The axon handles request processing, allowing validators to send this miner requests.
         self.axon = bt.axon(
             wallet=self.wallet,
             config=self.config() if callable(self.config) else self.config,
+            port=self.port,
+            external_port=self.port,
+            external_ip=self.ip
         )
 
         # Attach determiners which functions are called when servicing a request.

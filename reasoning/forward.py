@@ -33,6 +33,7 @@ async def forward(self):
         # Prepare the synapse object
         synapse = ReasoningSynapse(type="sliding_puzzle", problem=puzzle)
 
+        bt.logging.info(f"Querying the following miners: {miner_uids}")
         # Query the network
         responses = self.dendrite.query(
             axons=[self.metagraph.axons[uid] for uid in miner_uids],
