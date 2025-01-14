@@ -127,7 +127,6 @@ btcli wallet overview --wallet.name miner --subtensor.chain_endpoint ws://127.0.
 
 cd ../bittensor-subnet-template
 
-
 # Check if inside a tmux session
 if [ -z "$TMUX" ]; then
     # Start a new tmux session and run the miner in the first pane
