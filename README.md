@@ -58,19 +58,4 @@ For any inquiries, reach out to us via:
 - **Email**: [hello@reasoning.sh](mailto:ninjup.nine@gmail.com)
 
 <hr>
-
-<pre align="center">
-     ___          ___     
-    /\  \        /\  \    
-   /::\  \      /::\  \   
-  /:/\:\  \    /:/\:\  \  
- /::\~\:\  \  /::\~\:\  \ 
-/:/\:\ \:\__\/:/\:\ \:\__\
-\/_|::\/:/  /\/_|::\/:/  /
-   |:|::/  /    |:|::/  /   
-   |:|\/__/     |:|\/__/   
-   |:|  |       |:|  |        
-    \|__|        \|__|
-</pre>
-
 [Back to Top](#top)
