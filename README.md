@@ -15,7 +15,7 @@
 <hr>
 
 > [!WARNING]
-> The Reasoning subnet is under active development and may undergo breaking changes. Please join our [Discord](https://discord.gg/YourDiscordLink) to stay updated. If you encounter any bugs or wish to contribute, please refer to our [Contribution Guidelines](./CONTRIBUTING.md) for instructions.
+> The Reasoning subnet is under active development and may undergo breaking changes. Please join our [Discord](https://discord.gg/vqEtc7Ja) to stay updated. If you encounter any bugs or wish to contribute, please refer to our [Contribution Guidelines](./CONTRIBUTING.md) for instructions.
 
 ## Background
 
@@ -54,8 +54,8 @@ The Reasoning subnet is licensed under the [MIT License](./LICENSE.md). Feel fre
 For any inquiries, reach out to us via:
 
 - **Github**: Leave an issue on [Github](https://github.com/ninjup-nine/reasoning/issues)
-- **Discord**: Join our [Discord](https://discord.gg/2uXqxgs4)
-- **Email**: [hello@reasoning.sh](mailto:ninjup.nine@gmail.com)
+- **Discord**: Join our [Discord](https://discord.gg/vqEtc7Ja)
+- **Email**: [hello@reasoning.sh](mailto:hello@reasoning.sh)
 
 <hr>
 [Back to Top](#top)

@@ -7,7 +7,7 @@ from reasoning.puzzle.verifier import SlidingPuzzleVerifier
 from reasoning.puzzle.puzzle import SlidingPuzzle
 
 
-def reward(puzzle: List[List[int]], solution: List[Tuple[int, int, int, int]] | None) -> float:
+def get_reward(puzzle: List[List[int]], solution: List[Tuple[int, int, int, int]] | None) -> float:
     """
     Reward the miner response based on the quality of their sliding puzzle solution.
     
@@ -45,21 +45,3 @@ def reward(puzzle: List[List[int]], solution: List[Tuple[int, int, int, int]] | 
     
     bt.logging.debug(f"Valid solution with cost {total_cost} - reward: {reward}")
     return float(reward)
-
-
-def get_rewards(
-    self,
-    query: List[List[int]], 
-    responses: List[List[Tuple[int, int, int, int]]]
-) -> np.ndarray:
-    """
-    Returns an array of rewards for the given query and responses.
-
-    Args:
-    - query (List[List[int]]): The initial puzzle state sent to miners
-    - responses (List[List[Tuple[int, int, int, int]]]): List of solution sequences from miners
-
-    Returns:
-    - np.ndarray: An array of rewards for the given solutions
-    """
-    return np.array([reward(query, response) for response in responses])
