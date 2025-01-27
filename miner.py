@@ -121,7 +121,7 @@ class Miner:
             bt.logging.info(f"Result: {result}")
             if result['success']:
                 bt.logging.info("Problem solved. Submitting solution to validator.")
-                synapse.response = result['solution']
+                synapse.solution = result['solution']
         return synapse
 
     def setup_axon(self):
